@@ -1,25 +1,226 @@
 * {
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Jersey 10", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   }
   
-
-
 
 body {
-    background-color: #0D0208;
-  }
+  display: flex;
+  justify-content: center;      /* center card horizontally */
+  align-items: flex-start;      /* top alignment */
+  min-height: 100vh;
+  background-color: #0b0b0f;
+  padding: 40px;  
+}
+/*
+div {
+  border: solid;
+  border-color: #fff;
+}
+
+
+*/
+
+.icon {
+  width: auto;
+  height: 16px;
+  vertical-align: middle; 
+  margin-right: 5px; 
+}
+
+/* ===== LINE 1: HEADER ===== */
+.line1 {
+  display: flex;
+  justify-content: space-between; /* left / center / right */
+  align-items: center;
+  width: 100%;                    /* full width */
+  padding: 20px 50px;             /* padding from left and right edges */
+  box-sizing: border-box;         /* include padding in width */
+  color: #0ff;
+  background-color: rgba(100,110,150,0.1);
+  backdrop-filter: blur(2px);
+  position: relative;
+  top: 0;
+  left: 0;                         /* make sure it starts at the left */
+  z-index: 10;
+  font-size: 25px;
+}
+
+.line1 .right {
+  color: #ff00ff;
+}
+
+/* ===== LINE 2: PLAYER STATS ===== */
+.line2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+
+
+.avatar img {
+  border-radius: 50%;
+  border: 3px solid #0ff;
+  box-shadow: 0 0 20px #0ff;
+  width: 150px;
+  height: 150px;
+}
+
+.stats {
+  text-align: center;
+  color: #0ff;
+  display: flex;
+  flex-direction: column;  /* stack elements vertically */
+  align-items: center;     /* center horizontally */
+  justify-content: flex-start; /* align content to top */
+  height: 200px;  
+}
+
+.stats h2 {
+  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 15px;
+  justify-items: center;   /* center each stat inside its cell */
+  width: 100%;
+}
+
+.stats h2 {
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px #0ff;
+}
+
+.stats p{
+  color: #ff00ff;
+}
+
+.xp-bar {
+  width: 250px;
+  height: 10px;
+  border: 2px solid #0ff;
+  border-radius: 10px;
+  margin-top: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.xp-fill {
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(90deg, #0ff, #ff00ff);
+  box-shadow: 0 0 20px #0ff;
+  animation: glowMove 3s infinite alternate;
+}
+
+@keyframes glowMove {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.6); }
+}
+
+/* ===== LINE 3: SKILLS ===== */
+.line3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 20px;
   
-  h1 {
-    color: #00FF41;
+}
+
+.skill {
+  border: 2px solid #0ff;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 15px #0ff;
+  transition: 0.3s;
+}
+
+.skill:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px #ff00ff, 0 0 50px #0ff;
+}
+
+/* ===== LINE 4: DESCRIPTION ===== */
+.line4 {
+  width: 100%;
+  text-align: center;
+  color: #ff00ff;
+  border: 2px solid #ff00ff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 0 20px #ff00ff;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;  /* horizontal centering */
+  align-items: center;      /* vertical centering if needed */
+  text-align: center;  
+}
+
+.line4 p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+
+.card {
+  width: 90%;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid #0ff;
+  box-shadow: 0 0 30px rgba(0,200,255,0.5), 0 0 60px rgba(255,0,255,0.2);
+
+  background: repeating-linear-gradient(
+    0deg,                            /* horizontal stripes */
+    rgba(0,200,255,0.2) 0px,
+    rgba(0,200,255,0.2) 5px,
+    rgba(0,200,255,0.05) 5px,
+    rgba(0,200,255,0.05) 10px
+    
+  );
+
+  background-size: 100% 400%;       /* taller than card for vertical movement */
+  animation: shimmer-vertical 15s linear infinite;
+}
+
+@keyframes shimmer-vertical {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 -4%; } /* move top → bottom */
+}
+
+
+
+
+
+
+
+/* ===== SMALL SCREENS ===== */
+@media (max-width: 768px) {
+  .line1 {
+    flex-direction: column;
     text-align: center;
-    text-shadow: #00FF41 1px 0 10px
   }
-  
-  p {
-    font-family: verdana;
-    font-size: 20px;
+  .line2 {
+    flex-direction: column;
   }
+}
+
 
 
