@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  background: radial-gradient(circle at center, #0a0a1a 0%, #050510 100%);
+  overflow: hidden;
+}
+
+#gameCanvas {
+  display: block;
+  margin: auto;
+  margin-top: 50px;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 255, 0.1) 0px,
+    rgba(0, 255, 255, 0.1) 5px,
+    rgba(0, 255, 255, 0.05) 5px,
+    rgba(0, 255, 255, 0.05) 10px
+  );
+  border: 2px solid cyan;
+  box-shadow: 0 0 20px cyan, 0 0 40px magenta;
+}
+
+
+@media (max-width: 768px) {
+  .line1 {
+    flex-direction: column;
+    text-align: center;
+  }
+  .line2 {
+    flex-direction: column;
+  }
+}

@@ -115,13 +115,40 @@ div {
   background: rgba(255, 255, 255, 0.1);
 }
 
+.xp-container {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* keep everything aligned neatly */
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.xp-left, .xp-right {
+  color: #0ff;
+  font-size: 1rem;
+  text-shadow: 0 0 5px #0ff;
+}
+
+.xp-bar {
+  flex: 1;
+  max-width: 250px;
+  height: 10px;
+  border: 2px solid #0ff;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
 .xp-fill {
-  width: 75%;
+  width: 25%;
   height: 100%;
   background: linear-gradient(90deg, #0ff, #ff00ff);
   box-shadow: 0 0 20px #0ff;
   animation: glowMove 3s infinite alternate;
 }
+
 
 @keyframes glowMove {
   from { filter: brightness(1); }
@@ -175,6 +202,41 @@ div {
 .line4 p {
   font-size: 1.2rem;
   line-height: 1.5;
+}
+
+
+.return_btn {
+  display: flex;
+  justify-content: center; /* center horizontally */
+  margin-top: 20px;        /* space above the button */
+}
+
+.neon-btn {
+  background: transparent;
+  margin-top: 20px;
+  color: #0ff;
+  border: 2px solid #0ff;
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 10px #0ff, inset 0 0 10px #0ff;
+  transition: all 0.3s ease;
+}
+
+.neon-btn:hover {
+  color: #fff;
+  box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+  text-shadow: 0 0 10px #0ff;
+  transform: scale(1.05);
+}
+
+.neon-btn:active {
+  box-shadow: 0 0 5px #0ff, inset 0 0 5px #0ff;
+  transform: scale(0.98);
 }
 
 
