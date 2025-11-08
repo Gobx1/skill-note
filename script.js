@@ -1,25 +1,42 @@
+const startText = document.getElementById("start-text");
+const homeScreen = document.getElementById("home-screen");
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = 1200;
 canvas.height = 600;
 
-const tileSize = 40; // size of each block
 
+startText.addEventListener("click", () => {
+  // Hide home screen, show game
+  homeScreen.style.display = "none";
+  canvas.style.display = "block";
+
+  // Start the game loop
+  startGame();
+});
+
+function startGame() {
+  update();
+}
+
+const tileSize = 40; // size of each block
+const playerImage = new Image();
+playerImage.src = "caracter.png";
 
 let map_index = 0;
 // Example map: 0 = empty, 1 = platform
 const maps = [
   [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,2,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,2,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0]
   ],
 
   [
@@ -40,13 +57,14 @@ const maps = [
 const player = {
   x: 0,
   y: 0,
-  width: 30,
-  height: 40,
+  width: 24,
+  height: 46,
   velocityX: 0,
   velocityY: 0,
   speed: 5,
   jumpPower: -12,
-  grounded: false
+  grounded: false,
+  facingRight: true
 };
 
 const gravity = 0.6;
@@ -56,19 +74,24 @@ function nextMap() {
   if (map_index >= maps.length) map_index = 0; // Loop back to start
   
   map = maps[map_index];
-  resetPlayer();
+  resetPlayer(true);
 }
 function previousMap() {
   map_index-=1;
   if (map_index < 0) map_index = maps.length(); // Loop back to start
   
   map = maps[map_index];
-  resetPlayer();
+  resetPlayer(false);
 }
 
 function resetPlayer(next) {
   if (next == true){
-    player.x = 0;
+    player.x = 15;
+    player.velocityX = 0;
+    player.velocityY = 0;
+  }
+  else{
+    player.x = canvas.width-45;
     player.velocityX = 0;
     player.velocityY = 0;
   }
@@ -79,6 +102,24 @@ const keys = {};
 window.addEventListener("keydown", e => keys[e.code] = true);
 window.addEventListener("keyup", e => keys[e.code] = false);
 
+
+function drawPlayer() {
+  ctx.save(); // save current canvas state
+
+  if (!player.facingRight) {
+    // Flip horizontally
+    ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
+    ctx.scale(-1, 1); // flip x-axis
+    ctx.drawImage(playerImage, -player.width / 2, -player.height / 2, player.width, player.height);
+  } else {
+    ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+  }
+
+  ctx.restore(); // restore original canvas state
+}
+
+
+
 // Game loop
 function update() {
   map = maps[map_index];
@@ -87,12 +128,23 @@ function update() {
   if (player.x > canvas.width) {
     nextMap();  
   }
+  if (player.x < 0) {
+    previousMap();  
+  }
   console.log(player.x);
   console.log(canvas.width);
   // Horizontal movement
-  if (keys["ArrowLeft"]) player.velocityX = -player.speed;
-  else if (keys["ArrowRight"]) player.velocityX = player.speed;
-  else player.velocityX = 0;
+  if (keys["ArrowLeft"]){
+    player.velocityX = -player.speed;
+    player.facingRight = false;
+  }
+  else if (keys["ArrowRight"]){
+    player.velocityX = player.speed
+    player.facingRight = true;
+  }
+  else {
+    player.velocityX = 0;
+  }
 
   // Jump
   if (keys["Space"] && player.grounded) {
@@ -200,7 +252,7 @@ function draw() {
   ctx.fillStyle = "#0ff";
   ctx.shadowBlur = 20;
   ctx.shadowColor = "cyan";
-  ctx.fillRect(player.x, player.y, player.width, player.height);
+  drawPlayer();
 
   // Draw map blocks
   ctx.fillStyle = "#0ff4";
@@ -223,4 +275,24 @@ function draw() {
   }
 }
 
-update();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
