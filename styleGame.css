@@ -50,6 +50,36 @@ body {
   animation: flicker 2s infinite alternate;
 }
 
+#tip-text {
+  font-family: "Jersey 10", sans-serif;
+  font-size: 20px;
+  color: rgba(0, 255, 255, 0.6);
+  text-shadow: 0 0 10px #0ff;
+  margin-top: 30px;
+  letter-spacing: 2px;
+  animation: flicker 2s infinite alternate;
+}
+
+
+.popup {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #0ff;
+  padding: 16px 32px;
+  color: #0ff;
+  font-family: "Jersey 10", sans-serif;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #0ff;
+  display: none;
+}
+
+
+
 @keyframes flicker {
   0% { opacity: 1; text-shadow: 0 0 20px #0ff; }
   50% { opacity: 0.7; text-shadow: 0 0 40px #ff00ff; }
