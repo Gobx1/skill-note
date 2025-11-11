@@ -48,7 +48,7 @@ const tileTypes = {
   "1": { solid: true, color: "#0ff" },
 
   //Link to other pages
-  "%": { solid: false, special: "door" , link: "index.html", image:computer}, //GO TO CARACTER SHEET
+  "%": { solid: false, special: "door" , link: "caracterSheet.html", image:computer}, //GO TO CARACTER SHEET
   "&": { solid: false, special: "door" , link: "cv.html", image:computer}, //GO TO CV 
 
 
@@ -324,7 +324,7 @@ let activeDialog = {
   visible: false
 };
 
-let currentMap = maps.find(m => m.id === "experience");
+let currentMap = maps.find(m => m.id === "tutorial");
 
 ///////////////////////////////////
 ///////////////////////////////////

@@ -1,69 +1,23 @@
-
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <title>Page Title</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
-        <script src="script_normal.js"></script>
-    </head>
-    <body>
+<head>
+  <meta charset="UTF-8">
+  <title>My Game CV</title>
+  <link rel="stylesheet" href="styleGame.css">
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Home screen -->
+  <div id="home-screen">
+    <h1 id="start-text">&lt;START GAME...&gt;</h1>
+    <p id="tip-text">TIPS: PRESS F11 FOR A BETTER EXPERIENCE</p>
+  </div>
+  <div id="popup" class="popup"></div>
+  
 
-        <div class="card">
-            <section class="line line1">
-                <div class="left">Axel Bonneau</div>
-                <div class="center"><img src="jungler.png" alt="Occupation Icon" class="icon">Etudiant</div>
-                <div class="right">GobX1</div>
-            </section>
-            <section class="line line2">
-                <div class="avatar">
-                    <img src="omen.jfif" alt="Profile Photo">
-                </div>
-                <div class="stats">
-                    <h2>LEVEL 4 DEVELOPER</h2>
-                    <div class="stats-grid">
-                        <div class="stat">⚡ Energy: +30%</div>
-                        <div class="stat">🧠 Focus: +8</div>
-                        <div class="stat">💻 Python Development: +45%</div>
-                        <div class="stat">🎨 Creativity: +7</div>
-                        <div class="stat">🔎 Exploration: +45%</div>
-                        <div class="stat">😒 Negative Energy: -99</div>
-                        <div class="stat">🎮 Video-Game Skill: -2</div>
-                        <div class="stat" id="time-played">🕓 Time Played(age): ...</div>
-                    </div>
-                    <div class="xp-container">
-                    <span class="xp-left">4ème Année</span>
-                        <div class="xp-bar">
-                            <div class="xp-fill"></div>
-                        </div>
-                        <span class="xp-right">Diplome ingénieur</span>
-                    </div>
-                </div>
-            </section>
-            <section class="line line3">
-                <div class="skill">Python <br>★★★★☆</div>
-                <div class="skill">Video Game Dev <br>★★★☆☆</div>
-                <div class="skill">English <br>★★★★★</div>
-                <div class="skill">French <br>★★★★★</div>
-                <div class="skill">Teamwork <br>★★★★☆</div>
-                <div class="skill">Problem Solving <br>★★★☆☆</div>
-            </section>
-            
-            <section class="line line4">
-                <h2>Player Description:</h2>
-                <p>
-                A game developper always coding new things that comes to mind but still able to lock in and work seriously when neccessary.
-                He always love a good challenge(🌟Skill when challenged: +10).
-                </p>
-            </section>
+  <!-- Game screen -->
+  <canvas id="gameCanvas"></canvas>
 
-            <section class="return_btn">
-                <button class="neon-btn" onclick="window.close()">CLOSE WINDOW</button>
-            </section>
-        </div>
-
-    </body>
+  <script src="script.js"></script>
+</body>
 </html>
-
