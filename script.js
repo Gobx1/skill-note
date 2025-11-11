@@ -137,6 +137,7 @@ const maps = [
                                                                                               "Ah right. Welcome in this experience",
                                                                                               "We dont have much time here",
                                                                                               "Use the ARROWS to move LEFT and RIGHT",
+                                                                                              "The UP ARROW allow you to jump",
                                                                                               "You may press ENTER to interact",
                                                                                               "Interact with that yellow thing over there",
                                                                                               "Follow me..."
