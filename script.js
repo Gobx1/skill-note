@@ -570,7 +570,7 @@ let activeDialog = {
   visible: false
 };
 
-let currentMap = maps.find(m => m.id === "home");
+let currentMap = maps.find(m => m.id === "tutorial");
 
 ///////////////////////////////////
 ///////////////////////////////////
