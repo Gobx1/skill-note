@@ -55,7 +55,12 @@ const tileTypes = {
 
   "?": { solid: false, special: "portal", id: "home", color:"#dafb1e39"}, //TP TO HOME
   "!": { solid: false, special: "computer", id: "caracter", image: computer }, //TP TO CARACTER
-  "$": { solid: false, special: "computer", id: "experience", image: computer } //TP TO CARACTER
+  "$": { solid: false, special: "computer", id: "experience", image: computer }, //TP TO CARACTER
+  "€": { solid: false, special: "computer", id: "competences", image: computer }, //TP TO CARACTER
+  "#": { solid: false, special: "computer", id: "lep", image: computer }, //TP TO CARACTER
+  "~": { solid: false, special: "computer", id: "valeurs", image: computer }, //TP TO CARACTER
+  "+": { solid: false, special: "computer", id: "futur", image: computer } //TP TO CARACTER
+  
 };
 
 
@@ -95,6 +100,26 @@ startText.addEventListener("click", () => {
   startGame();
 });
 
+// --- FONCTIONNALITÉ : TÉLÉPORTATION AU CLIC ---
+canvas.addEventListener("mousedown", (e) => {
+  // Calculer la position de la souris par rapport au canvas
+  const rect = canvas.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+
+  // Déplacer le joueur aux coordonnées du clic
+  // On centre le joueur sur le clic (en soustrayant la moitié de sa largeur/hauteur)
+  player.x = mouseX - player.width / 2;
+  player.y = mouseY - player.height / 2;
+
+  // Réinitialiser les vitesses pour éviter qu'il ne garde une inertie de saut ou de chute
+  player.velocityX = 0;
+  player.velocityY = 0;
+  
+  console.log(`Joueur téléporté en X: ${Math.round(player.x)}, Y: ${Math.round(player.y)}`);
+});
+
+
 function startGame() {
   update();
 }
@@ -131,17 +156,17 @@ const maps = [
     ],
     npcs: [
       {
-        x: 140, y: 514, w: 24, h: 46, path:"gobx1.png", image:new Image(),go_right:false, dialog: [
-                                                                                              "Oh, another one...",
-                                                                                              "(Where is my script...)",
-                                                                                              "Ah right. Welcome in this experience",
-                                                                                              "We dont have much time here",
-                                                                                              "Use the ARROWS to move LEFT and RIGHT",
-                                                                                              "The UP ARROW allow you to jump",
-                                                                                              "You may press ENTER to interact",
-                                                                                              "Interact with that yellow thing over there",
-                                                                                              "Follow me..."
-                                                                                    ]
+        x: 140, y: 514, w: 24, h: 46, path: "gobx1.png", image: new Image(), go_right: false, dialog: [
+          "Oh, encore un visiteur...",
+          "(Où est passé mon script...)",
+          "Ah, voilà. Bienvenue dans cette expérience !",
+          "On n'a pas beaucoup de temps ici.",
+          "Utilise les FLÈCHES pour te déplacer à GAUCHE et à DROITE.",
+          "La TOUCHE DU HAUT te permet de sauter.",
+          "Tu peux appuyer sur ENTRÉE pour interagir avec les objets.",
+          "Essaie d'interagir avec le truc jaune là-bas.",
+          "Suis-moi..."
+        ]
       }
     ]
   },
@@ -157,12 +182,12 @@ const maps = [
       ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
       ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
       ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+      ["1","0","0","0","0","0","0","0","0","0","0","+","0","0","0","0","0","0","~","0","0","0","0","0","0","0","0","0","0","1","1"],
+      ["1","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","0","0","0","0","0","0","0","1","1"],
+      ["1","0","0","$","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","#","0","0","1","1"],
+      ["1","1","1","1","1","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1"],
       ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","!","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","$","0","0","1","1"],
+      ["1","0","0","!","0","0","0","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","0","0","0","€","0","0","1","1"],
       ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
     ],
     background: "blablb",
@@ -170,25 +195,29 @@ const maps = [
     images: [
     ],
     texts:[
-      {x:150, y:400, w:180, h:180, text:"Informations", color:"rgba(201, 147, 38, 1)",size:40},
-      {x:1000, y:400, w:180, h:180, text:"Analyse Experiences", color:"rgba(201, 147, 38, 1)",size:40},
+      {x:150, y:500, w:180, h:180, text:"Informations / CV", color:"rgba(201, 147, 38, 1)",size:30},
+      {x:150, y:380, w:180, h:180, text:"Profil, Parcours, Formation", color:"rgba(201, 147, 38, 1)",size:30},
+      {x:1050, y:500, w:180, h:180, text:"Compétences", color:"rgba(201, 147, 38, 1)",size:30},
+      {x:1050, y:380, w:180, h:180, text:"Mon projet Bénévole", color:"rgba(201, 147, 38, 1)",size:30},
+      {x:460, y:290, w:180, h:180, text:"Moi dans le futur", color:"rgba(201, 147, 38, 1)",size:30},
+      {x:750, y:290, w:180, h:180, text:"Mes valeurs", color:"rgba(201, 147, 38, 1)",size:30},
     ],
     npcs: [
       {
-        x: 650, y: 514, w: 24, h: 46, path:"gobx1.png", image:new Image(),go_up:false, dialog: [
-                                                                                              "Wow you made it!",
-                                                                                              "That was impressive right",
-                                                                                              "What you just interact with is a portal",
-                                                                                              "It just took some coding here and there",
-                                                                                              "And BOOM i change the map and your coordinate",
-                                                                                              "(Im losing the point here...)",
-                                                                                              "Welcome to MY world",
-                                                                                              "Here you will be able to learn more about me",
-                                                                                              "By simply exploring around",
-                                                                                              "You should start on the left",
-                                                                                              "You will be able to see more about me...",
-                                                                                              "See you soon..."
-                                                                                    ]
+        x: 650, y: 514, w: 24, h: 46, path: "gobx1.png", image: new Image(), go_up: false, dialog: [
+          "Wow, tu as réussi !",
+          "C'était impressionnant, non ?",
+          "Ce que tu viens d'utiliser, c'est un portail.",
+          "Un peu de code par-ci, par-là...",
+          "Et BOUM ! Je change la carte et tes coordonnées.",
+          "(Je m'égare un peu là...)",
+          "Bienvenue dans MON monde !",
+          "Ici, tu pourras en apprendre plus sur moi.",
+          "Il suffit d'explorer les environs.",
+          "Tu devrais commencer par la gauche.",
+          "Tu vas découvrir pas mal de choses...",
+          "À tout de suite !"
+        ]
       }
     ]
   },
@@ -217,84 +246,300 @@ const maps = [
     images: [
     ],
     texts:[
-      {x:820, y:250, w:180, h:180, text:"Who Am I", color:"rgba(201, 147, 38, 1)",size:25},
-      {x:1060, y:250, w:180, h:180, text:"More Details (CV)", color:"rgba(201, 147, 38, 1)",size:25},
+      {x:820, y:250, w:180, h:180, text:"Qui je suis", color:"rgba(201, 147, 38, 1)",size:25},
+      {x:1060, y:250, w:180, h:180, text:"Mon CV", color:"rgba(201, 147, 38, 1)",size:25},
     ],
     npcs: [
       {
         x: 140, y: 394, w: 24, h: 46, path:"gobx1.png", image:new Image(), dialog: [
-                                                                                    "take the portal on the left to go back home"
+                                                                                    "Prends le portail sur la gauche pour revenir au hub"
                                                                                     ]
       }
     ]
   },
   {
-    id: "experience",
-    spawn:{x:100,y:500},
-    layout:[
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1"],
-      ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1"],
-      ["1","?","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1"],
-      ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
+    id: "experience", // On garde l'ID pour que tes liens existants fonctionnent
+    spawn: { x: 100, y: 500 },
+    layout: [
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1"],
+        ["1","?","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1"],
+        ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
     ],
-    background: "blablb",
-    message: "Home",
-    images: [
-    ],
-    texts:[
-      {x:870, y:160, w:180, h:180, text:"SQL/Database", color:"rgba(201, 147, 38, 1)",size:25},
-      {x:520, y:160, w:180, h:180, text:"Networks/Telecom", color:"rgba(201, 147, 38, 1)",size:25},
-      {x:170, y:160, w:180, h:180, text:"Soft Skills/Analysis", color:"rgba(201, 147, 38, 1)",size:25},
+    background: "stage_bg",
+    message: "Mon Parcours",
+    images: [],
+    texts: [
+        { x: 870, y: 160, text: "Stage Cybersécurité", color: "rgba(201, 147, 38, 1)", size: 22 },
+        { x: 520, y: 160, text: "Stage Pédagogique", color: "rgba(201, 147, 38, 1)", size: 22 },
+        { x: 170, y: 160, text: "Profil & Formation", color: "rgba(201, 147, 38, 1)", size: 22 },
     ],
     npcs: [
-      {
-        x: 180, y: 514, w: 24, h: 46, path:"gobx1.png", image:new Image(), dialog: [
-                                                                                      "Here is one of my experience i want to share",
-                                                                                      "Feel free to go talk to my clones up there",
-                                                                                      "They only ever say the same thing",
-                                                                                      "Because i didnt want to work too much on them",
-                                                                                      "(I dont want them to replace me...)"
-                                                                                    ]
-      },
-      {
-        x: 860, y: 314, w: 24, h: 46, path:"talker.png", image:new Image(), dialog: [
-                                                                                      "At Lemnia, I managed client databases using SQL.",
-                                                                                      "I created and updated tables to organize customer data efficiently",
-                                                                                      "I ran queries to extract, sort, and analyze information",
-                                                                                      "I also learned about relational models and data security best practices"
-                                                                                    ]
-      },
-      {
-        x: 510, y: 314, w: 24, h: 46, path:"talker.png", image:new Image(), dialog: [
-                                                                                      "I installed and configured domestic telephone networks for clients.",
-                                                                                      "I diagnosed connection issues and resolved them quickly.",
-                                                                                      "I gained hands-on knowledge of cabling, connectors, and communication protocols.",
-                                                                                      "Following technical standards and safety procedures was essential."
-                                                                                    ]
-      },
-      {
-        x: 160, y: 314, w: 24, h: 46, path:"talker.png", image:new Image(), dialog: [
-                                                                                      "I developed autonomy and rigor, handling technical tasks precisely.",
-                                                                                      "I learned to plan interventions and follow up operations effectively.",
-                                                                                      "Communication was key: I coordinated with clients and the technical team.",
-                                                                                      "I adapted easily between database work and field network installations.",
-                                                                                      "Overall, this experience gave me a clear vision of technical operations and a useful versatility for digital professions."
-                                                                                    ]
-      },
-
+        {
+            x: 180, y: 514, w: 24, h: 46, path: "gobx1.png", image: new Image(), dialog: [
+                "Bienvenue dans la section de mon parcours !",
+                "Je suis étudiant ingénieur à l’ESAIP, spécialisé en IA.",
+                "Passionné de programmation et de jeux vidéo...",
+                "Je souhaite allier ces univers dans mon futur métier.",
+                "N'hésite pas à monter voir les détails de mes expériences !"
+            ]
+        },
+        {
+            x: 160, y: 314, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Ici, c'est mon profil académique.",
+                "Mon cursus à l'ESAIP me permet de maîtriser l'IA et le dev logiciel.",
+                "Je suis quelqu'un de curieux et très motivé par les technologies interactives."
+            ]
+        },
+        {
+            x: 510, y: 314, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "J'ai réalisé un stage d'ateliers scientifiques ludiques pour enfants.",
+                "C'était passionnant ! J'ai appris à vulgariser des concepts complexes.",
+                "Cela m'a aussi énormément appris sur le travail en équipe."
+            ]
+        },
+        {
+            x: 860, y: 314, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Mon stage chez Lemnia m'a plongé dans la cybersécurité.",
+                "J'y ai découvert le monde professionnel de l'informatique.",
+                "C'est là que j'ai compris que la cybersécurité est un domaine tout aussi intéressant et complexe que l'IA"
+            ]
+        }
     ]
-  }
+ },
+ {
+    id: "competences",
+    spawn: { x: 100, y: 500 },
+    layout: [
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","1","1","1","1","1","1","1","1","1","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","1","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+        ["1","?","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+        ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
+    ],
+    background: "skills_bg",
+    message: "Mes Compétences",
+    images: [],
+    texts: [
+        { x: 400, y: 314, text: "Comportementales", color: "#00ffcc", size: 25 },
+        { x: 700, y: 200, text: "Techniques", color: "#ff00ff", size: 25 },
+        { x: 850, y: 400, text: "Transversales", color: "#ffff00", size: 25 },
+    ],
+    npcs: [
+        {
+            x: 200, y: 314, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Côté Soft Skills, je mise sur l'adaptabilité.",
+                "Je suis quelqu'un de curieux avec une grande capacité d'apprentissage.",
+                "Mon esprit d'analyse et ma créativité m'aident à résoudre des problèmes complexes.",
+                "Et bien sûr, j'adore le travail d'équipe et l'autonomie !"
+            ]
+        },
+        {
+            x: 600, y: 194, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Ici, c'est le coeur de mon métier.",
+                "Je développe en Python (Objet, Algorithmique).",
+                "Je maîtrise l'IA et le Machine Learning avec TensorFlow, PyTorch et OpenCV.",
+                "Pour la gestion de données : SQL (MySQL) et Git/GitHub pour le versioning."
+            ]
+        },
+        {
+            x: 1000, y: 394, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Les compétences transversales sont mes outils bonus.",
+                "Grâce à mes stages, j'ai appris la vulgarisation scientifique et la pédagogie.",
+                "Je sais gérer mon temps et m'organiser sur des projets longs.",
+                "Ma capacité d'adaptation est ma plus grande force !"
+            ]
+        }
+    ]
+ },
+ {
+    id: "lep",
+    spawn: { x: 100, y: 500 },
+    layout: [
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"], // Zone 5
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"], // Zone 4
+        ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"], // Zone 3
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"], // Zone 2
+        ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"], // Zone 1
+        ["1","?","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
+    ],
+    message: "Mon LEP : Game-Design & IA",
+    images: [],
+    texts: [
+        { x: 485, y: 520, text: "1. Reinforcement Learning", color: "#4db8ff", size: 20 },
+        { x: 1000, y: 520, text: "2. Deep Learning", color: "#bf80ff", size: 20 },
+        { x: 120, y: 395, text: "3. AI & Ethics", color: "#ff4d4d", size: 20 },
+        { x: 1000, y: 280, text: "4. XAI (Explainable)", color: "#ffffff", size: 20 },
+        { x: 480, y: 160, text: "5. Multi-Criteria Optimization", color: "#ffcc00", size: 20 },
+    ],
+    npcs: [
+        {
+            x: 350, y: 514, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Bienvenue dans mon projet LEP : Expliquer l'IA par le jeu.",
+                "Zone 1 : Reinforcement Learning.",
+                "Ici, le joueur apprend les règles (saut, boutons) par essais-erreurs.",
+                "C'est la base de l'apprentissage par feedback : succès ou échec."
+            ]
+        },
+        {
+            x: 900, y: 514, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Zone 2 : Deep Learning.",
+                "On ne découvre plus les touches, on combine des patterns complexes.",
+                "Comme un réseau de neurones, on finit par agir 'automatiquement' par expérience."
+            ]
+        },
+        {
+            x: 200, y: 394, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Zone 3 : AI & Ethics (Le danger).",
+                "Le monde devient instable : les règles changent brutalement.",
+                "Cela illustre les biais : une IA est dangereuse si son environnement change ou si les données sont faussées."
+            ]
+        },
+        {
+            x: 850, y: 275, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Zone 4 : XAI (L'IA explicable).",
+                "Pourquoi as-tu suivi ce chemin ? Obéissance ou compréhension ?",
+                "Ici, on questionne la capacité de l'IA à justifier ses propres décisions."
+            ]
+        },
+        {
+            x: 300, y: 154, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Zone 5 : Optimisation multicritère.",
+                "Gérer le temps, les pièces et les dangers en même temps.",
+                "L'IA, comme le joueur, doit faire des compromis entre objectifs contradictoires."
+            ]
+        }
+    ]
+ },
+ {
+    id: "valeurs",
+    spawn: { x: 100, y: 500 }, // Apparition au centre
+    layout: [
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1"],  
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1"],
+        ["1","1","1","1","1","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1"],
+        ["1","0","0","0","0","1","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","0","0","0","0","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1"],
+        ["1","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","0","0","0","0","0","0","0","0","1"],
+        ["1","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","0","0","0","0","0","0","0","0","1"],
+        ["1","?","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","0","0","0","0","0","0","0","1"],
+        ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
+    ],
+    message: "Éthique et Valeurs",
+    images: [],
+    texts: [
+        { x: 270, y: 280, text: "Mes Valeurs", color: "#00ffcc", size: 30 },
+        { x: 920, y: 280, text: "Anti-Valeurs", color: "#ff4d4d", size: 30 },
+        { x: 800, y: 400, text: "Mon Éthique Professionnelle", color: "#ffffff", size: 20 }
+    ],
+    npcs: [
+        {
+            x: 150, y: 274, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Ici c'est le cœur de ma motivation : l'Innovation et la Curiosité.",
+                "Je crois au partage des connaissances, hérité de mon expérience en animation.",
+                "La persévérance face aux bugs et la rigueur sont mes piliers.",
+                "Travailler avec respect et autonomie est essentiel pour moi."
+            ]
+        },
+        {
+            x: 1050, y: 274, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Attention ! Zone d'instabilité.",
+                "Le manque de communication et le travail non-collaboratif sont mes bêtes noires.",
+                "Je refuse la routine sans créativité et la négligence de la sécurité.",
+                "L'absence d'éthique n'a pas sa place dans mes projets."
+            ]
+        },
+        {
+            x: 600, y: 394, w: 24, h: 46, path: "gobx1.png", image: new Image(), dialog: [
+                "Le code, c'est bien, mais les valeurs, c'est mieux !",
+                "Explore les plateformes en haut pour découvrir ce qui m'anime.",
+                "À gauche : ce que je recherche. À droite : ce que je fuis."
+            ]
+        }
+    ]
+    
+ },
+ {
+    id: "futur",
+    spawn: { x: 100, y: 500 },
+    layout: [
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+        ["1","0","0","0","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+        ["1","0","0","0","0","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+        ["1","?","0","0","0","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],
+        ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
+    ],
+    message: "Objectif : Horizon 2030",
+    texts: [
+        { x: 850, y: 230, text: "Ma Vision à 3-5 ans", color: "#00d4ff", size: 30 },
+        { x: 320, y: 540, text: "L'IA au service de l'immersion", color: "#ffffff", size: 18 }
+    ],
+    npcs: [
+        {
+            x: 1000, y: 235, w: 24, h: 46, path: "talker.png", image: new Image(), dialog: [
+                "Dans 3 à 5 ans, mon terrain de jeu sera l'industrie vidéoludique.",
+                "Mon but ? Lier l'IA et le Game Design pour créer des mondes vivants.",
+                "Je ne parle pas de générer du code, mais de créer des NPCs intelligents.",
+                "Imaginez des personnages uniques, capables d'interactions imprévisibles et naturelles...",
+                "C'est cette frontière entre technologie et émotion que je veux explorer."
+            ]
+        },
+        {
+            x: 150, y: 514, w: 24, h: 46, path: "gobx1.png", image: new Image(), dialog: [
+                "Vous êtes arrivés au bout de mon parcours !",
+                "Mon projet professionnel est clair : rendre le virtuel plus humain.",
+                "Merci d'avoir exploré mon univers !"
+            ]
+        }
+    ],
+    images: []
+}
 ];
 
 
@@ -325,7 +570,7 @@ let activeDialog = {
   visible: false
 };
 
-let currentMap = maps.find(m => m.id === "tutorial");
+let currentMap = maps.find(m => m.id === "home");
 
 ///////////////////////////////////
 ///////////////////////////////////
@@ -529,7 +774,6 @@ function drawNPCs() {
 
 function startAutoDialog(npc) {
   activeDialog.npc = npc;
-  console.log(npc)
   activeDialog.index = 0;
   activeDialog.visible = true;
 
@@ -559,6 +803,28 @@ function startAutoDialog(npc) {
   showNextLine();
 }
 
+function drawControls() {
+  ctx.save(); // Sauvegarde l'état du contexte
+  
+  const x = canvas.width - 220; // Position à droite
+  const y = 30;
+  
+  // Petit fond semi-transparent pour la lisibilité
+  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+  ctx.fillRect(x - 10, y - 20, 210, 110);
+  
+  ctx.fillStyle = "white";
+  ctx.font = "16px Arial";
+  ctx.textAlign = "left";
+  
+  ctx.fillText("CONTRÔLES :", x, y);
+  ctx.font = "14px Arial";
+  ctx.fillText("• Flèches : Se déplacer / Sauter", x, y + 25);
+  ctx.fillText("• Entrée : Interagir (PC / Portes)", x, y + 45);
+  ctx.fillText("• Clic Souris : Se téléporter", x, y + 65);
+  
+  ctx.restore(); // Restaure l'état
+}
 
 
 
@@ -623,6 +889,7 @@ function draw() {
     drawText(currentMap.texts[txt].x,currentMap.texts[txt].y,currentMap.texts[txt].text,currentMap.texts[txt].color, currentMap.texts[txt].size);
   } 
  drawPlayer(); 
+ drawControls();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -694,6 +961,10 @@ function update() {
       if (tileData.special === "portal"){
         if (isColliding(player,getBlock(row,col))){
           loadMap(tileData.id)
+          keys["Enter"] = false;
+          draw();
+          requestAnimationFrame(update);
+          return
         }
       }
 
@@ -701,18 +972,23 @@ function update() {
       if (tileData.special === "computer"){
         if (isColliding(player,getBlock(row,col)) && keys["Enter"]){
           loadMap(tileData.id)
+          keys["Enter"] = false;
+          draw();
+          requestAnimationFrame(update);
+          return
         }
       }
 
 
 
       if (tileData.special === "door"){
-        if (isColliding(player,getBlock(row,col))){
-          console.log("test")
-        }
 
         if (isColliding(player,getBlock(row,col)) && keys["Enter"]){
           open(tileData.link);
+          keys["Enter"] = false;
+          draw();
+    
+          return
         }
         
         
@@ -724,8 +1000,8 @@ function update() {
   
     
   }
-  
+  keys["Enter"] = false;
   draw();
   requestAnimationFrame(update);
-  keys["Enter"] = false;
+ 
 }
