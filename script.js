@@ -73,6 +73,27 @@ let map_index = 0;
 ///////////////////////////////////
 ///////////////////////////////////
 // Controls
+
+
+// Relancer la boucle de jeu quand l'utilisateur revient sur l'onglet
+window.addEventListener("focus", () => {
+    // On réinitialise les touches pour éviter que le personnage ne coure tout seul
+    for (let key in keys) {
+        keys[key] = false;
+    }
+    // On s'assure que la boucle tourne toujours
+    console.log("Focus récupéré : Reprise du jeu");
+});
+
+// Optionnel : Mettre les touches à zéro si on perd le focus
+window.addEventListener("blur", () => {
+    for (let key in keys) {
+        keys[key] = false;
+    }
+});
+
+
+
 const keys = {};
 window.addEventListener("keydown", e => keys[e.code] = true);
 window.addEventListener("keyup", e => keys[e.code] = false);
@@ -118,6 +139,8 @@ canvas.addEventListener("mousedown", (e) => {
   
   console.log(`Joueur téléporté en X: ${Math.round(player.x)}, Y: ${Math.round(player.y)}`);
 });
+
+
 
 
 function startGame() {
@@ -987,7 +1010,7 @@ function update() {
           open(tileData.link);
           keys["Enter"] = false;
           draw();
-    
+          requestAnimationFrame(update);
           return
         }
         
